@@ -1,51 +1,60 @@
 import 'package:flutter/material.dart';
-import 'package:gograb_flutter_app/pages/example.dart'; // 載入 material 函式庫(包含material的原件)
+import './pages/home.dart';
+import './pages/container_widget.dart';
+import './pages/common_widget.dart';
+import './pages/layout_widget.dart';
 
-// main 是 Dart 程式，最一開始的進入點
-main() {
-  runApp(MyApp());
-}
-
-// runApp 是 Flutter 程式進入點，若沒有載入上方 material 函式庫，將會不認識 runApp。
-// 放在 Center 容器裡面 Text 的元件，將會被放置在畫面的正中間
-
-//  狀態不會被改變, 畫面不更新, 降低系統的消耗
-//  不能return null
-
-//  需要寫兩個Class: 一個寫State, 一個寫Widget-------------------
-
-//StatefulWidget 監控State有沒有被改變 -> 整個Scaffold(就是一個page的widget)被刷新
+//void main() { runApp(MyApp()); }   大括號可省略
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-		    appBar: AppBar(
-		      title: Text('Grabee gogo'),
-		    ),
-		    body: HomePage(),
-    ));
-  }
-}
-
-class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Text('Hello it is flutter practice.'),
+        body: BottomNavigationController(),
+      ),
     );
   }
 }
 
-//class MyApp2 extends StatefulWidget {
-//	@override
-//	_MyApp2State createState() => _MyApp2State();
-//}
-//
-//class _MyApp2State extends State<MyApp2> {
-//	@override
-//	Widget build(BuildContext context) {
-//		return Container();
-//	}
-//}
+class BottomNavigationController extends StatefulWidget {
+  BottomNavigationController({Key key}) : super(key: key);
+
+  @override
+  _BottomNavigationControllerState createState() => _BottomNavigationControllerState();
+}
+
+class _BottomNavigationControllerState extends State<BottomNavigationController> {
+  //目前選擇頁索引值
+  int _currentIndex = 0; //預設值
+  final pages = [Home(), ContainerWidget(), CommonWidget(), LayoutWidget()];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Grabee's flutter studio"),
+      ),
+      body: pages[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
+          BottomNavigationBarItem(icon: Icon(Icons.chat), title: Text('Container')),
+          BottomNavigationBarItem(icon: Icon(Icons.account_circle), title: Text('Common')),
+	        BottomNavigationBarItem(icon: Icon(Icons.account_circle), title: Text('Layout')),
+        ],
+        currentIndex: _currentIndex, //目前選擇頁索引值
+        fixedColor: Colors.amber, //選擇頁顏色
+        onTap: _onItemClick, //BottomNavigationBar 按下處理事件
+      ),
+    );
+  }
+
+  //BottomNavigationBar 按下處理事件，更新設定當下索引值
+  void _onItemClick(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+}
