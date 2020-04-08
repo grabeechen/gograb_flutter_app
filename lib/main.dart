@@ -4,57 +4,76 @@ import './pages/container_widget.dart';
 import './pages/common_widget.dart';
 import './pages/layout_widget.dart';
 
-//void main() { runApp(MyApp()); }   大括號可省略
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: BottomNavigationController(),
+void main() => runApp(
+      new MaterialApp(
+        home: new MyApp(),
       ),
     );
-  }
-}
 
-class BottomNavigationController extends StatefulWidget {
-  BottomNavigationController({Key key}) : super(key: key);
-
+class MyApp extends StatefulWidget {
   @override
-  _BottomNavigationControllerState createState() => _BottomNavigationControllerState();
+  _MyAppState createState() => _MyAppState();
 }
 
-class _BottomNavigationControllerState extends State<BottomNavigationController> {
+class _MyAppState extends State<MyApp> {
   //目前選擇頁索引值
   int _currentIndex = 0; //預設值
-  final pages = [Home(), ContainerWidget(), CommonWidget(), LayoutWidget()];
+
+  final pages = [ContainerWidget(), CommonWidget(), LayoutWidget()];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return new Scaffold(
       appBar: AppBar(
         title: Text("Grabee's flutter studio"),
       ),
-      body: pages[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
-          BottomNavigationBarItem(icon: Icon(Icons.chat), title: Text('Container')),
-          BottomNavigationBarItem(icon: Icon(Icons.account_circle), title: Text('Common')),
-	        BottomNavigationBarItem(icon: Icon(Icons.account_circle), title: Text('Layout')),
-        ],
-        currentIndex: _currentIndex, //目前選擇頁索引值
-        fixedColor: Colors.amber, //選擇頁顏色
-        onTap: _onItemClick, //BottomNavigationBar 按下處理事件
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            UserAccountsDrawerHeader(
+              accountName: new Text(
+                "Grabee's studio",
+              ),
+              accountEmail: new Text(
+                "grabee@gmail.com",
+              ),
+              currentAccountPicture: new CircleAvatar(
+                backgroundImage: new AssetImage('assets/images/g_icon.png'),
+              ),
+            ),
+            //選單
+            ListTile(
+              leading: new CircleAvatar(child: Icon(Icons.chrome_reader_mode)),
+              title: Text('Container'),
+              onTap: () {
+                _onItemClick(0);
+              },
+            ),
+            ListTile(
+              leading: new CircleAvatar(child: Icon(Icons.code)),
+              title: Text('Common'),
+              onTap: () {
+                _onItemClick(1);
+              },
+            ),
+            ListTile(
+              leading: new CircleAvatar(child: Icon(Icons.computer)),
+              title: Text('Layout'),
+              onTap: () {
+                _onItemClick(2);
+              },
+            ),
+          ],
+        ),
       ),
+      body: pages[_currentIndex],
     );
   }
 
-  //BottomNavigationBar 按下處理事件，更新設定當下索引值
   void _onItemClick(int index) {
     setState(() {
       _currentIndex = index;
+      Navigator.of(context).pop();
     });
   }
 }
