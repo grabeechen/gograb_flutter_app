@@ -3,6 +3,7 @@ import './pages/home.dart';
 import './pages/container_widget.dart';
 import './pages/common_widget.dart';
 import './pages/layout_widget.dart';
+import './pages/listView_widget.dart';
 
 void main() => runApp(
       new MaterialApp(
@@ -19,7 +20,7 @@ class _MyAppState extends State<MyApp> {
   //目前選擇頁索引值
   int _currentIndex = 0; //預設值
 
-  final pages = [ContainerWidget(), CommonWidget(), LayoutWidget()];
+  final pages = [ContainerWidget(), CommonWidget(), LayoutWidget(), ListViewWidget()];
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +38,10 @@ class _MyAppState extends State<MyApp> {
               accountEmail: new Text(
                 "grabee@gmail.com",
               ),
-              currentAccountPicture: new CircleAvatar(
-                backgroundImage: new AssetImage('assets/images/g_icon.png'),
-              ),
+//              currentAccountPicture: new CircleAvatar(
+//                backgroundImage: new AssetImage('assets/images/g_icon.png'),
+//              ),
+		            currentAccountPicture:new CircleAvatar(child: Icon(Icons.person)),
             ),
             //選單
             ListTile(
@@ -63,6 +65,13 @@ class _MyAppState extends State<MyApp> {
                 _onItemClick(2);
               },
             ),
+	          ListTile(
+		          leading: new CircleAvatar(child: Icon(Icons.menu)),
+		          title: Text('ListView'),
+		          onTap: () {
+			          _onItemClick(3);
+		          },
+	          ),
           ],
         ),
       ),
