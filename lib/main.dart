@@ -4,6 +4,7 @@ import './pages/container_widget.dart';
 import './pages/common_widget.dart';
 import './pages/layout_widget.dart';
 import './pages/listView_widget.dart';
+import './pages/checkbox.dart';
 
 void main() => runApp(
       new MaterialApp(
@@ -20,7 +21,7 @@ class _MyAppState extends State<MyApp> {
   //目前選擇頁索引值
   int _currentIndex = 0; //預設值
 
-  final pages = [ContainerWidget(), CommonWidget(), LayoutWidget(), ListViewWidget()];
+  final pages = [ContainerWidget(), CommonWidget(), LayoutWidget(), ListViewWidget(), CheckboxWidget()];
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +73,13 @@ class _MyAppState extends State<MyApp> {
 			          _onItemClick(3);
 		          },
 	          ),
+            ListTile(
+              leading: new CircleAvatar(child: Icon(Icons.check_box)),
+              title: Text('Checkbox'),
+              onTap: () {
+                _onItemClick(4);
+              },
+            ),
           ],
         ),
       ),
