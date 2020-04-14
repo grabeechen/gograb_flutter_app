@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
 	}
 }
 
-// ---------- StatefulWidget: 需要寫兩個Class: 一個寫State, 一個寫Widget -------------------
+// ---------- StatefulWidget: 需要寫兩個Class: 先寫個Widget -> 再寫State-------------------
 
 //class MyApp2 extends StatefulWidget {
 //	@override
@@ -41,3 +41,4 @@ class HomePage extends StatelessWidget {
 //		return Container();
 //	}
 //}
+//
